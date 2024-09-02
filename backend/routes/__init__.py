@@ -1,0 +1,1 @@
+from backend.routes.user import UserResource
