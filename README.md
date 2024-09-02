@@ -56,9 +56,7 @@ Once activated, your terminal will show the name of the environment in the promp
 
 With the virtual environment activated, install the required dependencies using `pip`. These dependencies are listed in the `requirements.txt` file. Run the following command:
 
-    ```bash
     pip install -r requirements.txt
-    ```
 
 This command will install all the necessary Python packages needed to run the Flask backend.
 
