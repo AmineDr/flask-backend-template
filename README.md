@@ -21,7 +21,12 @@ Before you begin, ensure you have the following installed on your system:
 
 Follow the steps below to set up and run the Flask backend.
 
-### 1. Create a Python Virtual Environment
+### 1. Clone the Repository
+
+Clone this repository to your local machine
+using `git clone --depth 1 git@github.com:AmineDr/flask-backend-template.git` or download it as a zip file.
+
+### 2. Create a Python Virtual Environment
 
 A virtual environment helps to isolate the dependencies required by your project. To create a virtual environment, navigate to your project directory and run:
 
@@ -29,7 +34,7 @@ A virtual environment helps to isolate the dependencies required by your project
 
 This will create a directory named `venv` in your project folder.
 
-### 2. Activate the Virtual Environment
+### 3. Activate the Virtual Environment
 
 Before installing any dependencies, activate the virtual environment. The activation command differs based on your operating system:
 
@@ -47,7 +52,7 @@ Before installing any dependencies, activate the virtual environment. The activa
 
 Once activated, your terminal will show the name of the environment in the prompt.
 
-### 3. Install Requirements
+### 4. Install Requirements
 
 With the virtual environment activated, install the required dependencies using `pip`. These dependencies are listed in the `requirements.txt` file. Run the following command:
 
@@ -57,7 +62,7 @@ With the virtual environment activated, install the required dependencies using 
 
 This command will install all the necessary Python packages needed to run the Flask backend.
 
-### 4. Setup MySQL User
+### 5. Setup MySQL User
 
 Next, set up a MySQL user and database that the Flask application will use. Follow these steps:
 
@@ -87,7 +92,7 @@ Next, set up a MySQL user and database that the Flask application will use. Foll
     EXIT;
     ```
 
-### 5. Create `.env` File
+### 6. Create `.env` File
 
 The application uses environment variables for configuration, which are stored in a `.env` file. To set up your environment variables:
 
@@ -107,13 +112,16 @@ The application uses environment variables for configuration, which are stored i
     DB_PORT=3306
     ```
 
-### 6. Run the Application
+### 7. Run the Application
 
 With everything set up, you can now run the Flask application. Use the following command:
 
     python main.py
 
 The application should now be running on `http://127.0.0.1:5000/`.
+And you're done! You can now start developing your web application.
+
+* Note: The application will automatically create the database tables if they don't exist.
 
 ## Additional Notes
 

@@ -1,8 +1,6 @@
-from datetime import datetime
 import os.path
 import json
 
-from authlib.integrations.flask_client import OAuth
 from flask import Flask, abort, request, send_from_directory, url_for, redirect
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, create_refresh_token
@@ -37,11 +35,8 @@ api = Api(app, prefix='/api/')
 from backend.routes import *
 api.add_resource(UserResource, 'users')
 
-
-app.config['SESSION_SQLALCHEMY'] = db
-
 if app.config.get('ENV') == "production":
-    CORS(app, resources={r"/api/*": {"origins": ["https://staging.code45.online"]}})
+    CORS(app, resources={r"/api/*": {"origins": [app.config.get('SERVER_HOST')]}})
 else:
     CORS(app)
 

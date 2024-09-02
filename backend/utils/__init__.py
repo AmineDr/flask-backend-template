@@ -21,7 +21,10 @@ class PrivilegeService:
 
     @staticmethod
     def has_admin_header(headers: dict) -> bool:
-        return headers.get('X-Client') == "REACT_ADMIN"
+        """
+         SETUP FOR CUSTOM HEADER FOR ADMINS
+         """
+        return headers.get('X-CUSTOM_HEADER') == "CUSTOM_HEADER_VALUE"
 
 
 def check_privilege(**kwargs):
@@ -41,11 +44,11 @@ def check_privilege(**kwargs):
 
 
 def gen_id(seed='', length=40, random_scale=20):
-    store_short = os.environ.get("SERVER_SHORT_NAME")
-    if store_short is None:
-        store_short = "C45"
+    server_short = os.environ.get("SERVER_SHORT_NAME")
+    if server_short is None:
+        server_short = "C45"
     if seed:
-        return f'{store_short}-'+md5(seed.encode()).hexdigest().upper()
+        return f'{server_short}-'+md5(seed.encode()).hexdigest().upper()
     if isinstance(length, int) and isinstance(random_scale, int):
         return sha512(''.join(choices(ascii_letters, k=20)).encode()).hexdigest()[:length]
     else:
