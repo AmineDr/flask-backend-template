@@ -77,7 +77,7 @@ Next, set up a MySQL user and database that the Flask application will use. Foll
 
     ```sql
     CREATE USER 'fbt_user'@'localhost' IDENTIFIED BY 'fbt_pass';
-    GRANT ALL PRIVILEGES ON flask_app_db.* TO 'fbt_user'@'localhost';
+    GRANT ALL PRIVILEGES ON fbt_app_db.* TO 'fbt_user'@'localhost';
     FLUSH PRIVILEGES;
     ```
 
