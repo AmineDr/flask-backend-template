@@ -27,34 +27,3 @@ class LoginValidator(BaseModel):
         if password.__len__() < 8 and login_username != 'admin':
             raise ValueError('Invalid password')
         return password
-
-
-class RegisterValidator(BaseModel):
-    firstname: str
-    lastname: str
-    email: EmailStr
-    password: str
-
-    @field_validator('firstname')
-    def validate_firstname(cls, firstname):
-        if firstname.__len__() < 3:
-            raise ValueError('Invalid firstname')
-        return firstname
-
-    @field_validator('lastname')
-    def validate_lastname(cls, lastname):
-        if lastname.__len__() < 3:
-            raise ValueError('Invalid lastname')
-        return lastname
-
-    @field_validator('email')
-    def validate_email(cls, email):
-        if not validate_email(email):
-            raise ValueError('Invalid email')
-        return email
-
-    @field_validator('password')
-    def validate_password(cls, password):
-        if password.__len__() < 8:
-            raise ValueError('Invalid password')
-        return password

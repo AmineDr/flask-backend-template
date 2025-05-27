@@ -41,9 +41,5 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = db_url
 
-    SESSION_TYPE = "sqlalchemy"
-    SESSION_SQLALCHEMY = None
-    SESSION_PERMANENT = False
-
     SERVER_PIN = env.get("SERVER_PIN")
     VARS = dict(env)

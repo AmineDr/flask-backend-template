@@ -18,10 +18,7 @@ class Seeder:
             return None
         self.db.session.add(
             User(
-                firstname=name.split()[0],
-                lastname=name.split()[1],
-                address=fake.address(),
-                phone=f"{fake.numerify('###')} {fake.numerify('###')} {fake.numerify('####')}",
+                username=name.split()[0],
                 email=fake.email() if not default else "test@email.com",
                 password=password
             )

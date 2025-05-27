@@ -42,9 +42,9 @@ class User(db.Model):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'confirmed_at': self.confirmed_at,
-            'last_seen': self.last_seen,
-            'last_updated': self.last_updated,
-            'last_login_at': self.last_login_at,
-            'created_at': self.created_at
+            'confirmed_at': self.confirmed_at.__str__(),
+            'last_seen': self.last_seen.__str__(),
+            'last_updated': self.last_updated.__str__(),
+            'last_login_at': self.last_login_at.__str__(),
+            'created_at': self.created_at.__str__()
         }

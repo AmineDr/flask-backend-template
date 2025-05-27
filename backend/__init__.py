@@ -1,9 +1,10 @@
-import os.path
 import json
+import os.path
+from datetime import datetime
 
-from flask import Flask, abort, request, send_from_directory, url_for, redirect
+from flask import Flask, abort, send_from_directory, request
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, create_refresh_token
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, verify_jwt_in_request
 from flask_migrate import Migrate
 from flask_restful import Api
 from sqlalchemy.exc import IntegrityError
@@ -13,7 +14,6 @@ from backend.errors import InvalidConfigError
 from backend.models import *
 from backend.routes.user import UserResource
 from backend.seeds import Seeder
-from backend.utils import PrivilegeService
 
 app = Flask(__name__)
 
@@ -54,13 +54,13 @@ with app.app_context():
 @app.route('/static/<path:directory>/<path:filename>')
 def static_serve(directory, filename):
     relative_path = os.path.join(directory, filename)
-    file_path = os.path.join(os.environ.get('STATIC_FOLDER'), relative_path)
+    static_folder = os.environ.get('STATIC_FOLDER')
+    file_path = os.path.join(static_folder, str(relative_path))
 
     path, filename = os.path.split(os.path.abspath(file_path))
     if not os.path.exists(path):
         abort(404)
     return send_from_directory(path, filename)
-
 
 @app.route('/api')
 def home():
@@ -88,6 +88,27 @@ def logout():
 def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
     jti = jwt_payload["jti"]
     return RevokedToken.query.filter_by(token=jti).count() >= 1
+
+
+@app.before_request
+def update_last_seen():
+    excluded_routes = [
+        "/api/users",
+        "/api/refresh"
+    ]
+
+    if not request.path.startswith(tuple(excluded_routes)):
+        try:
+            verify_jwt_in_request(optional=True)
+            identity = get_jwt_identity()
+            if identity:
+                user_id = User.get_id_from_identity(identity)
+                current_user = User.query.get(user_id)
+                if current_user:
+                    current_user.last_seen = datetime.utcnow()
+                    db.session.commit()
+        except Exception as e:
+            print(e)
 
 
 @app.route('/api/ping')
